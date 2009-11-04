@@ -1,2 +1,8 @@
 > update
 [success]
+
+> test-compile
+[success]
+
+> features
+[success]
