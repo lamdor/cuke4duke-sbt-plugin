@@ -9,11 +9,11 @@ class JRuby(val classpath: PathFinder,
             val gemPath: Path,
             val log: Logger) {
 
-  if (!home.exists) {
-    home.asFile.mkdirs
-  }
-
   def apply(args: List[String]): Int = {
+    if (!home.exists) {
+      home.asFile.mkdirs
+    }
+
     Fork.java(None, javaArgs ++ args, None, jrubyEnv, LoggedOutput(log))
   }
 
