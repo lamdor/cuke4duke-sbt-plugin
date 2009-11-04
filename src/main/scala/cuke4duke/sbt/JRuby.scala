@@ -14,17 +14,15 @@ class JRuby(val classpath: PathFinder,
   }
 
   def apply(args: List[String]): Int = {
-    val classpathArg = (classpath.getFiles ++ FileUtilities.scalaJars).map(_.getAbsolutePath).mkString(File.pathSeparator)
-    val javaArgs = jvmArgs ++ ("-classpath" :: classpathArg :: "org.jruby.Main" :: args.toList)
-    val env = Map("GEM_PATH" -> gemPath.absolutePath,
-                  "HOME"     -> home.absolutePath)
-
-    log.debug("Cuke4Duke jvmArgs:\n\t" + javaArgs.mkString("\n\t"))
-
-    Fork.java(None, javaArgs, None, env, LoggedOutput(log))
+    Fork.java(None, javaArgs ++ args, None, jrubyEnv, LoggedOutput(log))
   }
 
   def installGem(gem:String) = {
     apply(List("-S", "gem", "install", "--no-ri", "--no-rdoc", "--install-dir", gemPath.absolutePath) ++ gem.split("\\s+"))
   }
+
+  private def classpathString = (classpath.getFiles ++ FileUtilities.scalaJars).map(_.getAbsolutePath).mkString(File.pathSeparator)
+  private def javaArgs = jvmArgs ++ ("-classpath" :: classpathString :: "org.jruby.Main" :: Nil)
+  private def jrubyEnv = Map("GEM_PATH" -> gemPath.absolutePath,
+                             "HOME"     -> home.absolutePath)
 }
