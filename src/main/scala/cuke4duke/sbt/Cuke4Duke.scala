@@ -1,7 +1,6 @@
 package cuke4duke.sbt
 
 import _root_.sbt._
-import java.io.File
 
 trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
   def cuke4DukeVersion = "0.1.8"
@@ -18,29 +17,11 @@ trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
   val gemPath = jRubyHome / "gems"
   val cucumberBin = gemPath / "bin" / "cucumber"
 
-  private def jruby(args: List[String]): Int = {
-    if (!jRubyHome.exists) {
-      jRubyHome.asFile.mkdirs
-    }
-
-    val jrubyClasspath = fullClasspath(Configurations.Test)
-    val classpathArg = (jrubyClasspath.getFiles ++ FileUtilities.scalaJars).map(_.getAbsolutePath).mkString(File.pathSeparator)
-    val javaArgs = cuke4DukeJvmArgs ++ ("-classpath" :: classpathArg :: "org.jruby.Main" :: args.toList)
-    val env = Map("GEM_PATH" -> gemPath.absolutePath,
-                  "HOME"     -> jRubyHome.absolutePath)
-
-    log.debug("Cuke4Duke jvmArgs:\n\t" + javaArgs.mkString("\n\t"))
-
-    Fork.java(None, javaArgs, None, env, LoggedOutput(log))
-  }
-
-  private def installGem(gem: String) = {
-    jruby(List("-S", "gem", "install", "--no-ri", "--no-rdoc", "--install-dir", gemPath.absolutePath) ++ gem.split("\\s+"))
-  }
+  private val jruby = new JRuby(fullClasspath(Configurations.Test), cuke4DukeJvmArgs, jRubyHome, gemPath, log)
 
   def installCuke4DukeGems() = {
     log.info("Installing Cuke4Duke gems...")
-    cuke4DukeGems.map(installGem(_)).reduceLeft(_ + _)
+    cuke4DukeGems.map(jruby.installGem(_)).reduceLeft(_ + _)
   }
 
   lazy val updateNoInstallCucumberGem = super.updateAction
@@ -53,11 +34,11 @@ trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
   override def updateAction = updateCuke4DukeGems dependsOn(updateNoInstallCucumberGem)
 
   def runCucumberFeatures() = {
-     jruby(List("-r", "cuke4duke",
-                cucumberBin.absolutePath,
-                featuresDirectory.absolutePath,
-                "--require", testCompilePath.absolutePath,
-                "--color") ++ extraCucumberOptions)
+    jruby(List("-r", "cuke4duke",
+               cucumberBin.absolutePath,
+               featuresDirectory.absolutePath,
+               "--require", testCompilePath.absolutePath,
+               "--color") ++ extraCucumberOptions)
   }
 
   lazy val features = task {
