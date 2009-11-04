@@ -41,10 +41,12 @@ trait Cuke4Duke extends BasicScalaProject {
                "--color") ++ extraCucumberOptions)
   }
 
-  lazy val features = task {
+  def featuresAction = task {
     runCucumberFeatures match {
       case 0 => None
       case i => Some("Cucumber features failed! - Exit Code: " + i)
     }
-  } dependsOn(testCompile)
+  }
+
+  lazy val features = featuresAction dependsOn(testCompile)
 }
