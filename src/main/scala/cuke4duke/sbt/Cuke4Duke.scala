@@ -14,8 +14,8 @@ trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
   val cuke4DukeJvmArgs = List("-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.PicoFactory")
 
   def jRubyHome = info.projectPath / "lib_managed" / "cuke4duke_gems"
-  lazy val gemPath = jRubyHome / "gems"
-  lazy val cucumberBin = gemPath / "bin" / "cucumber"
+  val gemPath = jRubyHome / "gems"
+  val cucumberBin = gemPath / "bin" / "cucumber"
 
   def featuresDirectory = info.projectPath / "features"
 
@@ -31,12 +31,10 @@ trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
                   "HOME"     -> jRubyHome.absolutePath,
                   "JRUBY_PARENT_CLASSPATH" -> classpathArg)
 
-    println("javaArgs:\n\t" + javaArgs.mkString("\n\t"))
+    log.debug("Cuke4Duke jvmArgs:\n\t" + javaArgs.mkString("\n\t"))
 
-    Fork.java(None, javaArgs, None, env, StdoutOutput)
+    Fork.java(None, javaArgs, None, env, LoggedOutput(log))
   }
-
-  def cucumberGemInstalled() = false
 
   def installCucumberGem() {
     log.info("Installing cucumber gem...")
@@ -46,7 +44,6 @@ trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
   lazy val updateNoInstallCucumberGem = super.updateAction
   lazy val updateGems = task { installCucumberGem; None }
   override def updateAction = updateGems dependsOn(updateNoInstallCucumberGem)
-
 
   def runCucumberFeatures() = {
      jruby(List("-r", "cuke4duke",
