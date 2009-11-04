@@ -2,7 +2,7 @@ package cuke4duke.sbt
 
 import _root_.sbt._
 
-trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
+trait Cuke4Duke extends BasicScalaProject {
   def cuke4DukeVersion = "0.1.8"
   def cuke4DukeGems = List("cucumber --version 0.4.3 --source http://gems.rubyforge.org/")
   def cuke4DukeJvmArgs = List("-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.PicoFactory")
@@ -46,5 +46,5 @@ trait Cuke4Duke extends BasicManagedProject with ScalaPaths {
       case 0 => None
       case i => Some("Cucumber features failed! - Exit Code: " + i)
     }
-  }
+  } dependsOn(testCompile)
 }

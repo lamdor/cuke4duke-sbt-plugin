@@ -1,8 +1,5 @@
 > update
 [success]
 
-> test-compile
-[success]
-
 > features
 [failure]
