@@ -48,5 +48,5 @@ trait Cuke4Duke extends BasicScalaProject {
     }
   }
 
-  lazy val features = featuresAction dependsOn(testCompile)
+  lazy val features = featuresAction dependsOn(testCompile) describedAs "Runs cucumber features"
 }
