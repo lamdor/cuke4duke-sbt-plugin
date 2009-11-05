@@ -16,7 +16,7 @@ Simply run the `features` action to run all cucumber features under the `feature
 
 1. In your plugin definition file, add a dependency on cuke4duke-sbt-plugin
 
-  i.e. in `project/plugins/Plugins.scala`
+    i.e. in `project/plugins/Plugins.scala`
 
         import sbt._
         class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
@@ -25,7 +25,7 @@ Simply run the `features` action to run all cucumber features under the `feature
 
 2. In your project file, mixin the Cuke4Duke trait
 
-  i.e., in `project/build/Project.scala`
+    i.e., in `project/build/Project.scala`
 
          import sbt._
          import cuke4duke.sbt.Cuke4Duke
