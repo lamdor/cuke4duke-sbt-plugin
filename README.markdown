@@ -1,19 +1,34 @@
 cuke4duke-sbt-plugin
 ==========
 
-### Setup ###
-in `project/plugins/Plugins.scala`
-    import sbt._
+This is a [simple-build-tool](http://simple-build-tool.googlecode.com/) plugin for running [Cucumber](http://cukes.info) features under [cuke4duke](http://github.com/aslakhellesoy/cuke4duke)
 
-    class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
-      val cuke4duke = "cuke4duke" % "cuke4duke-sbt-plugin" % "0.1.alpha"
-    }
+## Usage ##
+Simply run the `features` action to run all cucumber features under the `features` directory. Step definitions go in src/test/scala/. See the [cuke4duke wiki page for scala](http://wiki.github.com/aslakhellesoy/cuke4duke/scala) for more information.
 
-in `project/build/Project.scala`
-    import sbt._
-    import cuke4duke.sbt.Cuke4Duke
+## Setup ##
 
-    class YourProject(info: ProjectInfo) extends DefaultProject(info) with Cuke4Duke {
-      // ....
-    }
+1. In your plugin definition file, add a dependency on cuke4duke-sbt-plugin
 
+  i.e. in `project/plugins/Plugins.scala`
+
+        import sbt._
+        class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
+          val cuke4duke = "cuke4duke" % "cuke4duke-sbt-plugin" % "0.1.alpha"
+        }
+
+1. In your project file, mixin the Cuke4Duke trait
+
+  i.e., in `project/build/Project.scala`
+
+         import sbt._
+         import cuke4duke.sbt.Cuke4Duke
+         class YourProject(info: ProjectInfo) extends DefaultProject(info) with Cuke4Duke {
+           // ....
+         }
+
+1. Profit!
+
+## Future Features ##
+ * Cucumber as a TestFramework
+ * Running a single feature
