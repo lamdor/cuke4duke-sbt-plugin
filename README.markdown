@@ -8,6 +8,12 @@ Simply run the `features` action to run all cucumber features under the `feature
 
 ## Setup ##
 
+1. Build and publish the cuke4duke-sbt-plugin project
+       git clone git://github.com/rubbish/cuke4duke-sbt-plugin
+       cd cuke4duke-sbt-plugin
+       sbt update
+       sbt publish-local
+
 1. In your plugin definition file, add a dependency on cuke4duke-sbt-plugin
 
   i.e. in `project/plugins/Plugins.scala`
