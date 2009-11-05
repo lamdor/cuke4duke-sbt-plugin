@@ -17,7 +17,7 @@ Simply run the `features` action to run all cucumber features under the `feature
           val cuke4duke = "cuke4duke" % "cuke4duke-sbt-plugin" % "0.1.alpha"
         }
 
-1. In your project file, mixin the Cuke4Duke trait
+2. In your project file, mixin the Cuke4Duke trait
 
   i.e., in `project/build/Project.scala`
 
@@ -27,7 +27,7 @@ Simply run the `features` action to run all cucumber features under the `feature
            // ....
          }
 
-1. Profit!
+3. Profit!
 
 ## Future Features ##
  * Cucumber as a TestFramework
