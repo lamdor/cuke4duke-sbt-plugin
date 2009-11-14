@@ -3,8 +3,8 @@ package cuke4duke.sbt
 import _root_.sbt._
 
 trait Cuke4Duke extends BasicScalaProject {
-  def cuke4DukeVersion = "0.1.8"
-  def cucumberVersion = "0.4.3"
+  def cuke4DukeVersion = "0.1.9"
+  def cucumberVersion = "0.4.4"
 
   def cuke4DukeGems = List("cucumber --version %s --source http://gems.rubyforge.org/".format(cucumberVersion))
   def cuke4DukeJvmArgs = List("-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.PicoFactory")
