@@ -4,7 +4,9 @@ import _root_.sbt._
 
 trait Cuke4Duke extends BasicScalaProject {
   def cuke4DukeVersion = "0.1.8"
-  def cuke4DukeGems = List("cucumber --version 0.4.3 --source http://gems.rubyforge.org/")
+  def cucumberVersion = "0.4.3"
+
+  def cuke4DukeGems = List("cucumber --version %s --source http://gems.rubyforge.org/".format(cucumberVersion))
   def cuke4DukeJvmArgs = List("-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.PicoFactory")
   def jRubyHome = info.projectPath / "lib_managed" / "cuke4duke_gems"
   def featuresDirectory = info.projectPath / "features"
@@ -36,6 +38,7 @@ trait Cuke4Duke extends BasicScalaProject {
   def runCucumberFeatures() = {
     jruby(List("-r", "cuke4duke",
                cucumberBin.absolutePath,
+               "_%s_".format(cucumberVersion),
                featuresDirectory.absolutePath,
                "--require", testCompilePath.absolutePath,
                "--color") ++ extraCucumberOptions)
