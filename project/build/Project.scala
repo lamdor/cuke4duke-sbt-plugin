@@ -1,5 +1,8 @@
 import sbt._
 
-class Cuke4DukePluginProject(info: ProjectInfo) extends PluginProject(info) {
-  val ivy = "org.apache.ivy" % "ivy" % "2.0.0"
+class Cuke4DukePluginProject(info: ProjectInfo) extends PluginProject(info) with test.ScalaScripted {
+  override def scriptedSbt = "0.7.1"
+  override def scriptedBufferLog = false
+
+  override def testAction = testNoScripted
 }
