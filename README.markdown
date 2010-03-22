@@ -22,7 +22,7 @@ The Cuke4Duke trait automatically addes the cuke4duke dependency for you. You ma
 
         import sbt._
         class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
-          val cuke4duke = "cuke4duke" % "cuke4duke-sbt-plugin" % "0.1.alpha"
+          val cuke4duke = "cuke4duke" % "cuke4duke-sbt-plugin" % "0.2.4"
         }
 
 2. In your project file, mixin the Cuke4Duke trait
