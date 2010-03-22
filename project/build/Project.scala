@@ -5,4 +5,5 @@ class Cuke4DukePluginProject(info: ProjectInfo) extends PluginProject(info) with
   override def scriptedBufferLog = false
 
   override def testAction = testNoScripted
+  lazy val default = scripted dependsOn(publishLocal) describedAs("Publishes locally and tests against example projects")
 }
