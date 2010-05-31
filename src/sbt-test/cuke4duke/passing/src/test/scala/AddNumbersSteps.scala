@@ -1,7 +1,7 @@
-import cuke4duke.scala.{ Dsl, EN }
+import cuke4duke.{ ScalaDsl, EN }
 import org.junit.Assert.assertEquals
 
-class AddNumbersSteps extends Dsl with EN {
+class AddNumbersSteps extends ScalaDsl with EN {
   val adder = new Adder
 
   Given("first number is \"(\\d+)\"") { i: Int =>
